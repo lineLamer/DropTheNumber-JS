@@ -8,7 +8,7 @@ export class Block {
         this.posY = y;
         this.color = color;
         this.number = number;
-        this.active = true; // Indique si le bloc est actif et en descente
+        this.active = true; 
     }
 
     draw() {
@@ -17,22 +17,16 @@ export class Block {
 
         this.ctx.fillStyle = 'black';
         this.ctx.font = '20px Arial';
-        this.ctx.textAlign = 'center'; // Centrer horizontalement
-        this.ctx.textBaseline = 'middle'; // Centrer verticalement
+        this.ctx.textAlign = 'center'; 
+        this.ctx.textBaseline = 'middle'; 
 
-        // Calculer la position du texte
+        
         const textX = this.posX + this.width / 2;
         const textY = this.posY + this.height / 2;
 
         this.ctx.fillText(this.number, textX, textY);
     }
-/*
-    isColliding(otherBlock) {
-        return this.posX < otherBlock.posX + otherBlock.width &&
-               this.posX + this.width > otherBlock.posX &&
-               this.posY + this.height > otherBlock.posY &&
-               this.posY < otherBlock.posY + otherBlock.height;
-    }*/
+
     isColliding(otherBlock) {
         return this.posX === otherBlock.posX && this.posY + this.height === otherBlock.posY ||
                this.posX + this.width === otherBlock.posX && this.posY === otherBlock.posY ||
