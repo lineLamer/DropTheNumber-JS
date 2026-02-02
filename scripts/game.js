@@ -15,8 +15,8 @@ export class Game {
         this.numRows = this.canvas.height / this.rectHeight;
         this.maxRectangles = this.numColumns * this.numRows;
         this.animationId = null;
-        this.isGameOverSoundPlayed = false; // Add this line
-        this.isWinSoundPlayed = false; // Add this line
+        this.isGameOverSoundPlayed = false; 
+        this.isWinSoundPlayed = false; 
         
         this.user.maxScore =parseInt(document.getElementById("max").textContent,10) ;
     }
@@ -79,7 +79,7 @@ export class Game {
                         this.score += this.rectangles[lowerRectIndex].number;
                         this.rectangles.splice(lowerRectIndex === index1 ? index2 : index1, 1);
 
-                        // Play merge sound
+                       
                         const mergeSound = document.getElementById('mergeSound');
                         mergeSound.play();
 
@@ -97,13 +97,8 @@ export class Game {
                         if (index2 < index1) {
                             index1--;
                         }
-                        //console.log("ici je fusionne les blocks");
-/*
-                        if (rect1.number === 8192) {
-                            this.winGame();
-                            return;
-                        }*/
-                        this.checkForWinCondition(); // Check for win condition after every merge
+                        
+                        this.checkForWinCondition(); 
                         break;
                     }
                 }
@@ -112,7 +107,7 @@ export class Game {
     }
 
     checkAndMergeNeighbors(rect) {
-        // Vérification des collisions à gauche et à droite
+        
         let leftNeighbor = this.rectangles.find(otherRect => 
             otherRect !== rect && 
             otherRect.posX + otherRect.width === rect.posX && 
@@ -128,27 +123,17 @@ export class Game {
             rect.number *= 2;
             this.score += rect.number;
             this.rectangles.splice(this.rectangles.indexOf(leftNeighbor), 1);
-            this.checkAndMergeNeighbors(rect); // Appel récursif pour fusionner davantage
+            this.checkAndMergeNeighbors(rect); 
         }
 
         if (rightNeighbor && rightNeighbor.number === rect.number) {
             rect.number *= 2;
             this.score += rect.number;
             this.rectangles.splice(this.rectangles.indexOf(rightNeighbor), 1);
-            this.checkAndMergeNeighbors(rect); // Appel récursif pour fusionner davantage
+            this.checkAndMergeNeighbors(rect); 
         }
         this.mergeRectangles();
-        /*
-        if (rightNeighbor && rightNeighbor.number === rect.number) {
-            rect.number *= 2;
-            this.score += rect.number;
-            this.rectangles.splice(this.rectangles.indexOf(rightNeighbor), 1);
-            if (rect.number === 256) {
-                this.winGame();
-                return;
-            }
-            this.checkAndMergeNeighbors(rect);
-        }*/
+        
     }
     checkForWinCondition() {
         if (this.rectangles.some(rect => rect.number === 1024)) {
@@ -156,8 +141,8 @@ export class Game {
         }
     }
     endGame() {
-        if (!this.isGameOverSoundPlayed) { // Check if the sound has already been played
-            this.isGameOverSoundPlayed = true; // Set the flag to true
+        if (!this.isGameOverSoundPlayed) {
+            this.isGameOverSoundPlayed = true; 
             const gameOverSound = document.getElementById('gameOverSound');
             gameOverSound.play().catch(error => console.error('Failed to play game over sound:', error));
         }
@@ -170,13 +155,13 @@ export class Game {
         document.getElementById('playButton').style.display = "block";
         window.cancelAnimationFrame(this.animationId);
         this.updateMaxScore();
-        this.columnHeights.fill(0); // Réinitialise pour la nouvelle partie
+        this.columnHeights.fill(0); 
     }
 
     winGame() {
-        // Play win sound
-        if (!this.isWinSoundPlayed) { // Check if the sound has already been played
-            this.isWinSoundPlayed = true; // Set the flag to true
+        
+        if (!this.isWinSoundPlayed) { 
+            this.isWinSoundPlayed = true; 
             const winSound = document.getElementById('winSound');
             winSound.play().catch(error => console.error('Failed to play win sound:', error));
         }
@@ -189,7 +174,7 @@ export class Game {
         document.getElementById('playButton').style.display = "block";
         window.cancelAnimationFrame(this.animationId);
         this.updateMaxScore();
-        this.columnHeights.fill(0); // Réinitialise pour la nouvelle partie
+        this.columnHeights.fill(0); 
     }
 
     updateMaxScore() {
@@ -216,8 +201,8 @@ export class Game {
         this.animate();
     }
     resetGame() {
-        this.isGameOverSoundPlayed = false; // Reset the flag
-        this.isWinSoundPlayed = false; // Reset the flag
+        this.isGameOverSoundPlayed = false; 
+        this.isWinSoundPlayed = false; 
         document.getElementById("gameOverNotify").style.display = "none";
         document.getElementById("gameWinNotify").style.display = "none";
         this.rectangles = [];
